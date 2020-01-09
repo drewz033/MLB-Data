@@ -86,10 +86,16 @@ comparison_df$Swing.Outside.Zone<-comparison_df$Swing.Outside.Zone*100
 comparison_df$Swing.Pct<-comparison_df$Swing.Pct*100
 comparison_df$Outside.Zone.Contact<-comparison_df$Outside.Zone.Contact*100
 
+comp_plot<-comparison_df%>%
+  group_by(Season)%>%
+  summarise(TotalSO=sum(SO),AvgPitchInZone=mean(Pitches.In.Zone))
+
+plot(comp_plot$AvgPitchInZone,comp_plot$TotalSO)
+
 
 #view the correlations of swing type, of course we are expecting to see some highly correlated variables here
 
-cor(comparison_df[,3:7])
+cor(comparison_df[,6:9])
 
 #run the regression with pitches in the zone and swings in the zone as independent variables
 regression<-lm(formula=SO ~ Pitches.In.Zone+Swing.In.Zone, data=comparison_df)
